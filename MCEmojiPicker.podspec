@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
     s.homepage     = "https://github.com/izyumkin/MCEmojiPicker"
     s.license = { :type => "MIT", :file => "LICENSE" }
     s.author             = { "mustafagunes" => "gunes149@gmail.com" }
-    s.source       = { :git => "https://github.com/mustafagunes/mc-emoji-picker-binary", :tag => s.version }
+    s.source       = { :git => "https://github.com/mustafagunes/pods-binary-container", :tag => s.version }
     s.vendored_frameworks = "mc-emoji-picker-binary/XCFrameworks/MCEmojiPicker.xcframework"
     s.platform = :ios
     s.swift_version = '4.2'
