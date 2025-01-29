@@ -1,0 +1,4 @@
+framework module MCEmojiPicker {
+    header "MCEmojiPicker-Swift.h"
+    export *
+}

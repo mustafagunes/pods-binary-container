@@ -1,0 +1,1538 @@
+[
+  {
+    "contents" : {
+      "guid" : "Workspace:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker@11",
+      "name" : "MCEmojiPicker",
+      "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker",
+      "projects" : [
+        "cd711f916c9cdbc1172b0546d7cd0a77da6557ff38965d83be7257156dfb526a",
+        "bd4a13b6ef9c8199dbf0d36beb56228846afa896f5364d4df0d1a9e6a3f685d1"
+      ]
+    },
+    "signature" : "e20fb0ae85e1a37583122e264c3d7819e6e986a4f267fc6d2035ce5fecc6f3a4",
+    "type" : "workspace"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "CLANG_ENABLE_OBJC_ARC" : "YES",
+            "CODE_SIGN_IDENTITY" : "",
+            "CODE_SIGNING_REQUIRED" : "NO",
+            "COPY_PHASE_STRIP" : "NO",
+            "DEBUG_INFORMATION_FORMAT" : "dwarf",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "19.0",
+            "DYLIB_INSTALL_NAME_BASE" : "@rpath",
+            "ENABLE_NS_ASSERTIONS" : "YES",
+            "ENABLE_TESTABILITY" : "YES",
+            "ENABLE_TESTING_SEARCH_PATHS" : "YES",
+            "ENTITLEMENTS_REQUIRED" : "NO",
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=ios;ios-simulator]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=macos]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=tvos;tvos-simulator]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "GCC_OPTIMIZATION_LEVEL" : "0",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE",
+              "DEBUG=1"
+            ],
+            "IPHONEOS_DEPLOYMENT_TARGET" : "12.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "13.0",
+            "KEEP_PRIVATE_EXTERNS" : "NO",
+            "MACOSX_DEPLOYMENT_TARGET" : "10.13",
+            "ONLY_ACTIVE_ARCH" : "YES",
+            "OTHER_LDRFLAGS" : [
+
+            ],
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDK_VARIANT" : "auto",
+            "SDKROOT" : "auto",
+            "SKIP_INSTALL" : "YES",
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ],
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE",
+              "DEBUG"
+            ],
+            "SWIFT_INSTALL_OBJC_HEADER" : "NO",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "",
+            "SWIFT_OPTIMIZATION_LEVEL" : "-Onone",
+            "TVOS_DEPLOYMENT_TARGET" : "12.0",
+            "USE_HEADERMAP" : "NO",
+            "WATCHOS_DEPLOYMENT_TARGET" : "4.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::BUILDCONFIG_Debug",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "CLANG_ENABLE_OBJC_ARC" : "YES",
+            "CODE_SIGN_IDENTITY" : "",
+            "CODE_SIGNING_REQUIRED" : "NO",
+            "COPY_PHASE_STRIP" : "YES",
+            "DEBUG_INFORMATION_FORMAT" : "dwarf-with-dsym",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "19.0",
+            "DYLIB_INSTALL_NAME_BASE" : "@rpath",
+            "ENABLE_TESTING_SEARCH_PATHS" : "YES",
+            "ENTITLEMENTS_REQUIRED" : "NO",
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=ios;ios-simulator]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=macos]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "FRAMEWORK_SEARCH_PATHS[__platform_filter=tvos;tvos-simulator]" : [
+              "$(inherited)",
+              "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            ],
+            "GCC_OPTIMIZATION_LEVEL" : "s",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE"
+            ],
+            "IPHONEOS_DEPLOYMENT_TARGET" : "12.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "13.0",
+            "KEEP_PRIVATE_EXTERNS" : "NO",
+            "MACOSX_DEPLOYMENT_TARGET" : "10.13",
+            "OTHER_LDRFLAGS" : [
+
+            ],
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDK_VARIANT" : "auto",
+            "SDKROOT" : "auto",
+            "SKIP_INSTALL" : "YES",
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ],
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE"
+            ],
+            "SWIFT_INSTALL_OBJC_HEADER" : "NO",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "",
+            "SWIFT_OPTIMIZATION_LEVEL" : "-Owholemodule",
+            "TVOS_DEPLOYMENT_TARGET" : "12.0",
+            "USE_HEADERMAP" : "NO",
+            "WATCHOS_DEPLOYMENT_TARGET" : "4.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::BUILDCONFIG_Release",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "defaultConfigurationName" : "Release",
+      "developmentRegion" : "en",
+      "groupTree" : {
+        "children" : [
+          {
+            "children" : [
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_0",
+                "name" : "Bindings/Observable.swift",
+                "path" : "Bindings/Observable.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_1",
+                "name" : "Common/Extensions/Array+Extension.swift",
+                "path" : "Common/Extensions/Array+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_2",
+                "name" : "Common/Extensions/Bundle+Extension.swift",
+                "path" : "Common/Extensions/Bundle+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_3",
+                "name" : "Common/Extensions/Double+Extension.swift",
+                "path" : "Common/Extensions/Double+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_4",
+                "name" : "Common/Extensions/NSNotification.Name+Extension.swift",
+                "path" : "Common/Extensions/NSNotification.Name+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_5",
+                "name" : "Common/Extensions/UICollectionReusableView+Extension.swift",
+                "path" : "Common/Extensions/UICollectionReusableView+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_6",
+                "name" : "Common/Extensions/UIColor+Extension.swift",
+                "path" : "Common/Extensions/UIColor+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_7",
+                "name" : "Common/Extensions/View+Extension.swift",
+                "path" : "Common/Extensions/View+Extension.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_8",
+                "name" : "Model/MCEmoji.swift",
+                "path" : "Model/MCEmoji.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_9",
+                "name" : "Model/MCEmojiCategory.swift",
+                "path" : "Model/MCEmojiCategory.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_10",
+                "name" : "Model/MCPickerArrowDirection.swift",
+                "path" : "Model/MCPickerArrowDirection.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_11",
+                "name" : "Services/MCUnicodeManager.swift",
+                "path" : "Services/MCUnicodeManager.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_12",
+                "name" : "View/MCEmojiPickerRepresentableController.swift",
+                "path" : "View/MCEmojiPickerRepresentableController.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_13",
+                "name" : "View/MCEmojiPickerViewController.swift",
+                "path" : "View/MCEmojiPickerViewController.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_14",
+                "name" : "View/Views/EmojiCategoryView/MCEmojiCategoryIconView.swift",
+                "path" : "View/Views/EmojiCategoryView/MCEmojiCategoryIconView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_15",
+                "name" : "View/Views/EmojiCategoryView/MCTouchableEmojiCategoryView.swift",
+                "path" : "View/Views/EmojiCategoryView/MCTouchableEmojiCategoryView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_16",
+                "name" : "View/Views/EmojiPreviewView/MCEmojiPreviewBackgroundView.swift",
+                "path" : "View/Views/EmojiPreviewView/MCEmojiPreviewBackgroundView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_17",
+                "name" : "View/Views/EmojiPreviewView/MCEmojiPreviewView.swift",
+                "path" : "View/Views/EmojiPreviewView/MCEmojiPreviewView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_18",
+                "name" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerBackgroundView.swift",
+                "path" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerBackgroundView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_19",
+                "name" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerContainerView.swift",
+                "path" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerContainerView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_20",
+                "name" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerView.swift",
+                "path" : "View/Views/EmojiSkinTonePickerView/MCEmojiSkinTonePickerView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_21",
+                "name" : "View/Views/MCEmojiCollectionViewCell.swift",
+                "path" : "View/Views/MCEmojiCollectionViewCell.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_22",
+                "name" : "View/Views/MCEmojiPickerView.swift",
+                "path" : "View/Views/MCEmojiPickerView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_23",
+                "name" : "View/Views/MCEmojiSectionHeader.swift",
+                "path" : "View/Views/MCEmojiSectionHeader.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_24",
+                "name" : "ViewModel/MCEmojiPickerViewModel.swift",
+                "path" : "ViewModel/MCEmojiPickerViewModel.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              }
+            ],
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0",
+            "name" : "Sources/MCEmojiPicker",
+            "path" : "Sources/MCEmojiPicker",
+            "sourceTree" : "<group>",
+            "type" : "group"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_1",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ar.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ar.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_2",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ca.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ca.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_3",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/cs.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/cs.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_4",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/da.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/da.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_5",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/de.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/de.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_6",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/el.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/el.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_7",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-AU.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-AU.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_8",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-GB.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-GB.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_9",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-IN.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en-IN.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_10",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/en.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_11",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/es-419.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/es-419.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_12",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/es.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/es.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_13",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fi.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fi.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_14",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fr-CA.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fr-CA.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_15",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fr.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/fr.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_16",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/he.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/he.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_17",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hi.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hi.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_18",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hr.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hr.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_19",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hu.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/hu.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_20",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/id.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/id.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_21",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/it.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/it.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_22",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ja.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ja.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_23",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ko.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ko.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_24",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ms.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ms.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_25",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/nb.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/nb.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_26",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/nl.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/nl.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_27",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pl.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pl.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_28",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pt-BR.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pt-BR.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_29",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pt-PT.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/pt-PT.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_30",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ro.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ro.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_31",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ru.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/ru.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_32",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/sk.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/sk.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_33",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/sv.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/sv.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_34",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/th.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/th.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_35",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/tr.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/tr.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_36",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/uk.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/uk.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_37",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/vi.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/vi.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_38",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-HK.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-HK.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_39",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-Hans.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-Hans.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "fileType" : "file",
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_40",
+            "name" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-Hant.lproj/MCEmojiPickerLocalizable.strings",
+            "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/Sources/MCEmojiPicker/Resources/Localization/zh-Hant.lproj/MCEmojiPickerLocalizable.strings",
+            "sourceTree" : "<absolute>",
+            "type" : "file"
+          },
+          {
+            "children" : [
+              {
+                "fileType" : "file",
+                "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_41::REF_0",
+                "name" : "MCEmojiPicker_MCEmojiPicker.bundle",
+                "path" : "MCEmojiPicker_MCEmojiPicker.bundle",
+                "sourceTree" : "BUILT_PRODUCTS_DIR",
+                "type" : "file"
+              }
+            ],
+            "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_41",
+            "name" : "/",
+            "path" : "/",
+            "sourceTree" : "<group>",
+            "type" : "group"
+          }
+        ],
+        "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP",
+        "name" : "",
+        "path" : "",
+        "sourceTree" : "<group>",
+        "type" : "group"
+      },
+      "guid" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker@11",
+      "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker",
+      "projectDirectory" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker",
+      "projectIsPackage" : "true",
+      "projectName" : "MCEmojiPicker",
+      "targets" : [
+        "ce61b8c78501193667048d75fbc213f00305afe6c3fb947e091a898f517a4d90",
+        "00906ac36e3a244697ef2c840bdfcad3d8ee55d480ea550575ef24541a3114ed",
+        "82117db3d990b9cb0dfec41605d8b36e1341677a1cf5b401d1d31b7af0378d6c"
+      ]
+    },
+    "signature" : "cd711f916c9cdbc1172b0546d7cd0a77da6557ff38965d83be7257156dfb526a",
+    "type" : "project"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "APPLICATION_EXTENSION_API_ONLY" : "YES",
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
+          },
+          "guid" : "PACKAGE-PRODUCT:MCEmojiPicker::BUILDCONFIG_Debug",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "APPLICATION_EXTENSION_API_ONLY" : "YES",
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
+          },
+          "guid" : "PACKAGE-PRODUCT:MCEmojiPicker::BUILDCONFIG_Release",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-TARGET:MCEmojiPicker@11"
+        }
+      ],
+      "frameworksBuildPhase" : {
+        "buildFiles" : [
+          {
+            "guid" : "PACKAGE-PRODUCT:MCEmojiPicker::BUILDPHASE_0::0",
+            "platformFilters" : [
+
+            ],
+            "targetReference" : "PACKAGE-TARGET:MCEmojiPicker@11"
+          }
+        ],
+        "guid" : "PACKAGE-PRODUCT:MCEmojiPicker::BUILDPHASE_0",
+        "type" : "com.apple.buildphase.frameworks"
+      },
+      "guid" : "PACKAGE-PRODUCT:MCEmojiPicker@11",
+      "name" : "MCEmojiPicker_273FFBBD25AAFDEF_PackageProduct",
+      "type" : "packageProduct"
+    },
+    "signature" : "ce61b8c78501193667048d75fbc213f00305afe6c3fb947e091a898f517a4d90",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "CLANG_COVERAGE_MAPPING_LINKER_ARGS" : "NO",
+            "CLANG_ENABLE_MODULES" : "YES",
+            "CURRENT_PROJECT_VERSION" : "1",
+            "DEFINES_MODULE" : "YES",
+            "EXECUTABLE_NAME" : "MCEmojiPicker",
+            "GENERATE_INFOPLIST_FILE" : "YES",
+            "GENERATE_MASTER_OBJECT_FILE" : "NO",
+            "GENERATE_RESOURCE_ACCESSORS" : "YES",
+            "INSTALL_PATH" : "/usr/local/lib",
+            "LIBRARY_SEARCH_PATHS" : [
+              "$(inherited)",
+              "/Applications/Xcode-16.1.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos"
+            ],
+            "MACH_O_TYPE" : "mh_dylib",
+            "MARKETING_VERSION" : "1.0",
+            "MODULEMAP_FILE_CONTENTS" : "module MCEmojiPicker {\n    header \"/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/.build/scipio/DerivedData/Products/Release-iphoneos/MCEmojiPicker.framework/Headers/MCEmojiPicker-Swift.h\"\n    export *\n}",
+            "MODULEMAP_PATH" : "$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)/MCEmojiPicker.modulemap",
+            "ONLY_ACTIVE_ARCH" : "NO",
+            "PACKAGE_RESOURCE_BUNDLE_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "MCEmojiPicker",
+            "PRODUCT_MODULE_NAME" : "$(EXECUTABLE_NAME:c99extidentifier)",
+            "PRODUCT_NAME" : "$(EXECUTABLE_NAME:c99extidentifier)",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_INSTALL_OBJC_HEADER" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "MCEmojiPicker-Swift.h",
+            "SWIFT_VERSION" : "4.2",
+            "TARGET_NAME" : "MCEmojiPicker"
+          },
+          "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDCONFIG_Debug",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "EMBED_PACKAGE_RESOURCE_BUNDLE_NAMES" : [
+                "$(inherited)",
+                "MCEmojiPicker_MCEmojiPicker"
+              ],
+              "OTHER_CFLAGS" : [
+                "$(inherited)",
+                "-fmodule-map-file=$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)/MCEmojiPicker.modulemap"
+              ],
+              "OTHER_LDFLAGS" : [
+                "$(inherited)",
+                "-Wl,-no_warn_duplicate_libraries"
+              ],
+              "OTHER_LDRFLAGS" : [
+
+              ]
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "CLANG_COVERAGE_MAPPING_LINKER_ARGS" : "NO",
+            "CLANG_ENABLE_MODULES" : "YES",
+            "CURRENT_PROJECT_VERSION" : "1",
+            "DEFINES_MODULE" : "YES",
+            "EXECUTABLE_NAME" : "MCEmojiPicker",
+            "GENERATE_INFOPLIST_FILE" : "YES",
+            "GENERATE_MASTER_OBJECT_FILE" : "NO",
+            "GENERATE_RESOURCE_ACCESSORS" : "YES",
+            "INSTALL_PATH" : "/usr/local/lib",
+            "LIBRARY_SEARCH_PATHS" : [
+              "$(inherited)",
+              "/Applications/Xcode-16.1.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos"
+            ],
+            "MACH_O_TYPE" : "mh_dylib",
+            "MARKETING_VERSION" : "1.0",
+            "MODULEMAP_FILE_CONTENTS" : "module MCEmojiPicker {\n    header \"/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/.build/scipio/DerivedData/Products/Release-iphoneos/MCEmojiPicker.framework/Headers/MCEmojiPicker-Swift.h\"\n    export *\n}",
+            "MODULEMAP_PATH" : "$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)/MCEmojiPicker.modulemap",
+            "ONLY_ACTIVE_ARCH" : "NO",
+            "PACKAGE_RESOURCE_BUNDLE_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "MCEmojiPicker",
+            "PRODUCT_MODULE_NAME" : "$(EXECUTABLE_NAME:c99extidentifier)",
+            "PRODUCT_NAME" : "$(EXECUTABLE_NAME:c99extidentifier)",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_INSTALL_OBJC_HEADER" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "MCEmojiPicker-Swift.h",
+            "SWIFT_VERSION" : "4.2",
+            "TARGET_NAME" : "MCEmojiPicker"
+          },
+          "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDCONFIG_Release",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "EMBED_PACKAGE_RESOURCE_BUNDLE_NAMES" : [
+                "$(inherited)",
+                "MCEmojiPicker_MCEmojiPicker"
+              ],
+              "OTHER_CFLAGS" : [
+                "$(inherited)",
+                "-fmodule-map-file=$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)/MCEmojiPicker.modulemap"
+              ],
+              "OTHER_LDFLAGS" : [
+                "$(inherited)",
+                "-Wl,-no_warn_duplicate_libraries"
+              ],
+              "OTHER_LDRFLAGS" : [
+
+              ]
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_0",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_1",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_2",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_3",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_4",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_5",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::5",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_6",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::6",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_7",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::7",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_8",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::8",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_9",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::9",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_10",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::10",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_11",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::11",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_12",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::12",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_13",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::13",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_14",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::14",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_15",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_16",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::16",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_17",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::17",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_18",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::18",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_19",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::19",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_20",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::20",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_21",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::21",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_22",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::22",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_23",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::23",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_0::REF_24",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0::24",
+              "platformFilters" : [
+
+              ]
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_41::REF_0",
+              "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ]
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:MCEmojiPicker::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.resources"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-RESOURCE:MCEmojiPicker@11"
+        }
+      ],
+      "guid" : "PACKAGE-TARGET:MCEmojiPicker@11",
+      "impartedBuildProperties" : {
+        "buildSettings" : {
+          "EMBED_PACKAGE_RESOURCE_BUNDLE_NAMES" : [
+            "$(inherited)",
+            "MCEmojiPicker_MCEmojiPicker"
+          ],
+          "OTHER_CFLAGS" : [
+            "$(inherited)",
+            "-fmodule-map-file=$(OBJROOT)/GeneratedModuleMaps/$(PLATFORM_NAME)/MCEmojiPicker.modulemap"
+          ],
+          "OTHER_LDFLAGS" : [
+            "$(inherited)",
+            "-Wl,-no_warn_duplicate_libraries"
+          ],
+          "OTHER_LDRFLAGS" : [
+
+          ]
+        }
+      },
+      "name" : "MCEmojiPicker",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:MCEmojiPicker",
+        "name" : "MCEmojiPicker.o",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.framework",
+      "type" : "standard"
+    },
+    "signature" : "00906ac36e3a244697ef2c840bdfcad3d8ee55d480ea550575ef24541a3114ed",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "GENERATE_INFOPLIST_FILE" : "NO",
+            "INFOPLIST_FILE" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/.build/scipio/Info-MCEmojiPicker_MCEmojiPicker.plist",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "resource",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "MCEmojiPicker.MCEmojiPicker.resources",
+            "PRODUCT_MODULE_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "PRODUCT_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "TARGET_NAME" : "MCEmojiPicker_MCEmojiPicker"
+          },
+          "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDCONFIG_Debug",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "GENERATE_INFOPLIST_FILE" : "NO",
+            "INFOPLIST_FILE" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker/.build/scipio/Info-MCEmojiPicker_MCEmojiPicker.plist",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "resource",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "MCEmojiPicker.MCEmojiPicker.resources",
+            "PRODUCT_MODULE_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "PRODUCT_NAME" : "MCEmojiPicker_MCEmojiPicker",
+            "TARGET_NAME" : "MCEmojiPicker_MCEmojiPicker"
+          },
+          "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDCONFIG_Release",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_1",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_2",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_3",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_4",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_5",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_6",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::5",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_7",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::6",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_8",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::7",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_9",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::8",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_10",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::9",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_11",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::10",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_12",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::11",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_13",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::12",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_14",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::13",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_15",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::14",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_16",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_17",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::16",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_18",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::17",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_19",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::18",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_20",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::19",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_21",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::20",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_22",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::21",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_23",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::22",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_24",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::23",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_25",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::24",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_26",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::25",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_27",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::26",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_28",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::27",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_29",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::28",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_30",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::29",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_31",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::30",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_32",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::31",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_33",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::32",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_34",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::33",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_35",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::34",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_36",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::35",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_37",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::36",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_38",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::37",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_39",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::38",
+              "platformFilters" : [
+
+              ]
+            },
+            {
+              "fileReference" : "PACKAGE:/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker::MAINGROUP::REF_40",
+              "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0::39",
+              "platformFilters" : [
+
+              ]
+            }
+          ],
+          "guid" : "PACKAGE-RESOURCE:MCEmojiPicker::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.resources"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "guid" : "PACKAGE-RESOURCE:MCEmojiPicker@11",
+      "impartedBuildProperties" : {
+        "buildSettings" : {
+
+        }
+      },
+      "name" : "MCEmojiPicker_MCEmojiPicker",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-RESOURCE:MCEmojiPicker",
+        "name" : "MCEmojiPicker_MCEmojiPicker",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.bundle",
+      "type" : "standard"
+    },
+    "signature" : "82117db3d990b9cb0dfec41605d8b36e1341677a1cf5b401d1d31b7af0378d6c",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDK_VARIANT" : "auto",
+            "SDKROOT" : "auto",
+            "SKIP_INSTALL" : "YES",
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ]
+          },
+          "guid" : "AGGREGATE::BUILDCONFIG_Debug",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDK_VARIANT" : "auto",
+            "SDKROOT" : "auto",
+            "SKIP_INSTALL" : "YES",
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ]
+          },
+          "guid" : "AGGREGATE::BUILDCONFIG_Release",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "defaultConfigurationName" : "Release",
+      "developmentRegion" : "en",
+      "groupTree" : {
+        "children" : [
+
+        ],
+        "guid" : "AGGREGATE::MAINGROUP",
+        "name" : "",
+        "path" : "",
+        "sourceTree" : "<group>",
+        "type" : "group"
+      },
+      "guid" : "AGGREGATE@11",
+      "path" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker",
+      "projectDirectory" : "/Users/mustafagunes/Desktop/Projects/Teknasyon/mc-emoji-picker-binary/MCEmojiPicker",
+      "projectIsPackage" : "true",
+      "projectName" : "Aggregate",
+      "targets" : [
+
+      ]
+    },
+    "signature" : "bd4a13b6ef9c8199dbf0d36beb56228846afa896f5364d4df0d1a9e6a3f685d1",
+    "type" : "project"
+  }
+]
