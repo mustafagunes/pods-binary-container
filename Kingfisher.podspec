@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     s.version      = "8.1.4"
     s.summary      = "This library includes Kingfisher binary libraries."
     s.description  = "This library includes Kingfisher and the libraries it requires. Its purpose is to reduce long build times."
-    s.homepage     = "https://github.com/divkit/divkit-ios-facade"
+    s.homepage     = "https://github.com/onevcat/Kingfisher"
     s.license = { :type => "MIT", :file => "LICENSE" }
     s.author             = { "mustafagunes" => "gunes149@gmail.com" }
     s.source       = { :git => "https://github.com/mustafagunes/pods-binary-container", :tag => s.version }
