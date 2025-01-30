@@ -31,6 +31,7 @@ import XCTest
 class ImageDownloaderTests: XCTestCase {
 
     var downloader: ImageDownloader!
+    var modifier = URLModifier()
 
     override class func setUp() {
         super.setUp()
@@ -66,14 +67,6 @@ class ImageDownloaderTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testDownloadAnImageAsync() async throws {
-        let url = testURLs[0]
-        stub(url, data: testImageData)
-        
-        let result = try await downloader.downloadImage(with: url, options: .empty)
-        XCTAssertEqual(result.originalData, testImageData)
-    }
-    
     func testDownloadMultipleImages() {
         let exp = expectation(description: #function)
         let group = DispatchGroup()
@@ -89,21 +82,6 @@ class ImageDownloaderTests: XCTestCase {
         
         group.notify(queue: .main, execute: exp.fulfill)
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testDownloadMultipleImagesAsync() async throws {
-        try await withThrowingTaskGroup(of: ImageLoadingResult.self) { group in
-            for url in testURLs {
-                stub(url, data: testImageData)
-                group.addTask {
-                    try await self.downloader.downloadImage(with: url)
-                }
-            }
-            
-            for try await result in group {
-                XCTAssertEqual(result.originalData, testImageData)
-            }
-        }
     }
     
     func testDownloadAnImageWithMultipleCallback() {
@@ -131,7 +109,7 @@ class ImageDownloaderTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
         
-        let modifier = URLModifier(url: url)
+        modifier.url = url
         
         let someURL = URL(string: "some_strange_url")!
         let task = downloader.downloadImage(with: someURL, options: [.requestModifier(modifier)]) { result in
@@ -139,7 +117,7 @@ class ImageDownloaderTests: XCTestCase {
             XCTAssertEqual(result.value?.url, url)
             exp.fulfill()
         }
-        XCTAssertTrue(task.isInitialized)
+        XCTAssertNotNil(task)
         waitForExpectations(timeout: 3, handler: nil)
     }
 
@@ -149,27 +127,25 @@ class ImageDownloaderTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
 
-        let downloadTaskCalled = ActorBox(false)
+        var downloadTaskCalled = false
 
-        let asyncModifier = AsyncURLModifier(url: url, onDownloadTaskStarted: { task in
+        let asyncModifier = AsyncURLModifier()
+        asyncModifier.url = url
+        asyncModifier.onDownloadTaskStarted = { task in
             XCTAssertNotNil(task)
-            Task {
-                await downloadTaskCalled.setValue(true)
-            }
-        })
+            downloadTaskCalled = true
+        }
 
-        let someURL = URL(string: "some_strange_url")!
+
+        let someURL = URL(string: "some_strage_url")!
         let task = downloader.downloadImage(with: someURL, options: [.requestModifier(asyncModifier)]) { result in
             XCTAssertNotNil(result.value)
             XCTAssertEqual(result.value?.url, url)
-            Task {
-                let result = await downloadTaskCalled.value
-                XCTAssertTrue(result)
-                exp.fulfill()
-            }
+            XCTAssertTrue(downloadTaskCalled)
+            exp.fulfill()
         }
         // The returned task is nil since the download is not starting immediately.
-        XCTAssertFalse(task.isInitialized)
+        XCTAssertNil(task)
         waitForExpectations(timeout: 3, handler: nil)
     }
 
@@ -231,7 +207,7 @@ class ImageDownloaderTests: XCTestCase {
     func testDownloadEmptyURL() {
         let exp = expectation(description: #function)
         
-        let modifier = URLModifier(url: nil)
+        modifier.url = nil
         
         let url = URL(string: "http://onevcat.com")!
         downloader.downloadImage(
@@ -272,22 +248,12 @@ class ImageDownloaderTests: XCTestCase {
             delay(0.1) { exp.fulfill() }
         }
         
-        XCTAssertTrue(task.isInitialized)
-        task.cancel()
+        XCTAssertNotNil(task)
+        task!.cancel()
 
         _ = stub.go()
         
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testCancelDownloadTaskAsync() async throws {
-        let url = testURLs[0]
-        let stub = delayedStub(url, data: testImageData, length: 123)
-        
-        let checker = CallingChecker()
-        try await checker.checkCancelBehavior(stub: stub) {
-            _ = try await self.downloader.downloadImage(with: url)
-        }
     }
 
     func testCancelOneDownloadTask() {
@@ -309,7 +275,7 @@ class ImageDownloaderTests: XCTestCase {
             group.leave()
         }
 
-        task1.cancel()
+        task1?.cancel()
         delay(0.1) { _ = stub.go() }
         group.notify(queue: .main) {
             delay(0.1) { exp.fulfill() }
@@ -412,8 +378,9 @@ class ImageDownloaderTests: XCTestCase {
             group.leave()
         }
         
-        XCTAssertTrue(downloadTask.isInitialized)
-        downloadTask.cancel()
+        XCTAssertNotNil(downloadTask)
+        
+        downloadTask!.cancel()
         _ = stub.go()
         
         group.enter()
@@ -432,10 +399,10 @@ class ImageDownloaderTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testDownloadTaskNilWithNilURL() {
-        let modifier = URLModifier(url: nil)
+    func testDownloadTaskNil() {
+        modifier.url = nil
         let downloadTask = downloader.downloadImage(with: URL(string: "url")!, options: [.requestModifier(modifier)])
-        XCTAssertFalse(downloadTask.isInitialized)
+        XCTAssertNil(downloadTask)
     }
     
     func testDownloadWithProcessor() {
@@ -445,13 +412,13 @@ class ImageDownloaderTests: XCTestCase {
         stub(url, data: testImageData)
 
         let p = RoundCornerImageProcessor(cornerRadius: 40)
-        let roundCornered = testImage.kf.image(withRoundRadius: 40, fit: testImage.kf.size)
+        let roundcornered = testImage.kf.image(withRoundRadius: 40, fit: testImage.kf.size)
         
         downloader.downloadImage(with: url, options: [.processor(p)]) { result in
             XCTAssertNotNil(result.value)
             let image = result.value!.image
             XCTAssertFalse(image.renderEqual(to: testImage))
-            XCTAssertTrue(image.renderEqual(to: roundCornered))
+            XCTAssertTrue(image.renderEqual(to: roundcornered))
             XCTAssertEqual(result.value!.originalData, testImageData)
             exp.fulfill()
         }
@@ -465,7 +432,7 @@ class ImageDownloaderTests: XCTestCase {
         let stub = delayedStub(url, data: testImageData)
 
         let p1 = RoundCornerImageProcessor(cornerRadius: 40)
-        let roundCornered = testImage.kf.image(withRoundRadius: 40, fit: testImage.kf.size)
+        let roundcornered = testImage.kf.image(withRoundRadius: 40, fit: testImage.kf.size)
 
         let p2 = BlurImageProcessor(blurRadius: 3.0)
         let blurred = testImage.kf.blurred(withRadius: 3.0)
@@ -474,7 +441,7 @@ class ImageDownloaderTests: XCTestCase {
 
         group.enter()
         let task1 = downloader.downloadImage(with: url, options: [.processor(p1)]) { result in
-            XCTAssertTrue(result.value!.image.renderEqual(to: roundCornered))
+            XCTAssertTrue(result.value!.image.renderEqual(to: roundcornered))
             group.leave()
         }
 
@@ -485,7 +452,7 @@ class ImageDownloaderTests: XCTestCase {
         }
 
         XCTAssertNotNil(task1)
-        XCTAssertEqual(task1.sessionTask?.task, task2.sessionTask?.task)
+        XCTAssertEqual(task1?.sessionTask.task, task2?.sessionTask.task)
 
         _ = stub.go()
         
@@ -548,21 +515,16 @@ class ImageDownloaderTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
 
-        let modifierCalled = ActorBox(false)
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
 
         downloader.downloadImage(with: url, options: [.imageModifier(modifier)]) { result in
+            XCTAssertFalse(modifierCalled)
             XCTAssertEqual(result.value?.image.renderingMode, .automatic)
-            Task {
-                let called = await modifierCalled.value
-                XCTAssertFalse(called)
-                exp.fulfill()
-            }
+            exp.fulfill()
         }
 
         waitForExpectations(timeout: 3, handler: nil)
@@ -579,13 +541,13 @@ class ImageDownloaderTests: XCTestCase {
             _ in
             exp.fulfill()
         }
-        XCTAssertEqual(task.sessionTask?.task.priority, URLSessionTask.highPriority)
+        XCTAssertEqual(task?.sessionTask.task.priority, URLSessionTask.highPriority)
         waitForExpectations(timeout: 3, handler: nil)
     }
     
     
     func testSessionDelegate() {
-        class ExtensionDelegate: SessionDelegate, @unchecked Sendable {
+        class ExtensionDelegate: SessionDelegate {
             //'exp' only for test
             public let exp: XCTestExpectation
             init(_ expectation:XCTestExpectation) {
@@ -676,14 +638,6 @@ class ImageDownloaderTests: XCTestCase {
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testDownloadingLivePhotoResources() async throws {
-        let url = testURLs[0]
-        stub(url, data: testImageData)
-        let result = try await downloader.downloadLivePhotoResource(with: url, options: .init(.empty))
-        XCTAssertEqual(result.originalData, testImageData)
-        XCTAssertEqual(result.url, url)
-    }
 }
 
 class URLNilDataModifier: ImageDownloaderDelegate {
@@ -701,16 +655,18 @@ class TaskNilDataModifier: ImageDownloaderDelegate {
 class TaskResponseCompletion: ImageDownloaderDelegate {
 
     let onReceiveResponse = Delegate<URLResponse, URLSession.ResponseDisposition>()
-    func imageDownloader(_ downloader: ImageDownloader, didReceive response: URLResponse) async -> URLSession.ResponseDisposition {
-        return onReceiveResponse.call(response)!
+
+    func imageDownloader(
+        _ downloader: ImageDownloader,
+        didReceive response: URLResponse,
+        completionHandler: @escaping (URLSession.ResponseDisposition) -> Void
+    ) {
+        completionHandler(onReceiveResponse.call(response)!)
     }
 }
 
-final class URLModifier: ImageDownloadRequestModifier {
-    let url: URL?
-    init(url: URL?) {
-        self.url = url
-    }
+class URLModifier: ImageDownloadRequestModifier {
+    var url: URL? = nil
     func modified(for request: URLRequest) -> URLRequest? {
         var r = request
         r.url = url
@@ -718,20 +674,15 @@ final class URLModifier: ImageDownloadRequestModifier {
     }
 }
 
-final class AsyncURLModifier: AsyncImageDownloadRequestModifier {
-    let url: URL?
-    let onDownloadTaskStarted: (@Sendable (DownloadTask?) -> Void)?
-    
-    init(url: URL?, onDownloadTaskStarted: (@Sendable (DownloadTask?) -> Void)?) {
-        self.url = url
-        self.onDownloadTaskStarted = onDownloadTaskStarted
-    }
+class AsyncURLModifier: AsyncImageDownloadRequestModifier {
+    var url: URL? = nil
+    var onDownloadTaskStarted: ((DownloadTask?) -> Void)?
 
-    func modified(for request: URLRequest) async -> URLRequest? {
+    func modified(for request: URLRequest, reportModified: @escaping (URLRequest?) -> Void) {
         var r = request
         r.url = url
-        // Simulate an async action
-        try? await Task.sleep(nanoseconds: 1_000_000)
-        return r
+        DispatchQueue.main.async {
+            reportModified(r)
+        }
     }
 }

@@ -42,15 +42,13 @@ class IndicatorCollectionViewController: UICollectionViewController {
         func startAnimatingView() {
             view.isHidden = false
             timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
-                Task { @MainActor in
-                    UIView.animate(withDuration: 0.2, animations: {
-                        if self.view.backgroundColor == .red {
-                            self.view.backgroundColor = .orange
-                        } else {
-                            self.view.backgroundColor = .red
-                        }
-                    })
-                }
+                UIView.animate(withDuration: 0.2, animations: {
+                    if self.view.backgroundColor == .red {
+                        self.view.backgroundColor = .orange
+                    } else {
+                        self.view.backgroundColor = .red
+                    }
+                })
             }
         }
         

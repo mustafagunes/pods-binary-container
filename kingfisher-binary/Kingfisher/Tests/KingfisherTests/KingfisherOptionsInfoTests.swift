@@ -146,16 +146,14 @@ class KingfisherOptionsInfoTests: XCTestCase {
     }
 }
 
-final class TestModifier: ImageDownloadRequestModifier {
+class TestModifier: ImageDownloadRequestModifier {
     func modified(for request: URLRequest) -> URLRequest? {
         return nil
     }
 }
 
-final class TestRedirectHandler: ImageDownloadRedirectHandler {
-    func handleHTTPRedirection(
-        for task: Kingfisher.SessionDataTask, response: HTTPURLResponse, newRequest: URLRequest
-    ) async -> URLRequest? {
-        newRequest
+class TestRedirectHandler: ImageDownloadRedirectHandler {
+    func handleHTTPRedirection(for task: SessionDataTask, response: HTTPURLResponse, newRequest: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        completionHandler(newRequest)
     }
 }

@@ -305,24 +305,25 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 
 #if defined(__OBJC__)
-
 @class UIImage;
 @class CALayer;
 @class NSCoder;
 
-/// Represents a subclass of <code>UIImageView</code> for displaying animated images.
-/// Different from showing an animated image in a normal <code>UIImageView</code> (which loads all frames at one time),
-/// <code>AnimatedImageView</code> only tries to load several frames (defined by <code>AnimatedImageView/framePreloadCount</code>) to
-/// reduce memory usage. It provides a tradeoff between memory usage and CPU time. If you have a memory issue when
-/// using a normal image view to load GIF data, you could give this class a try.
-/// Kingfisher supports setting GIF animated data to either <code>UIImageView</code> or <code>AnimatedImageView</code> out of the box. So
+/// Represents a subclass of <code>UIImageView</code> for displaying animated image.
+/// Different from showing animated image in a normal <code>UIImageView</code> (which load all frames at one time),
+/// <code>AnimatedImageView</code> only tries to load several frames (defined by <code>framePreloadCount</code>) to reduce memory usage.
+/// It provides a tradeoff between memory usage and CPU time. If you have a memory issue when using a normal image
+/// view to load GIF data, you could give this class a try.
+/// Kingfisher supports setting GIF animated data to either <code>UIImageView</code> and <code>AnimatedImageView</code> out of box. So
 /// it would be fairly easy to switch between them.
 SWIFT_CLASS("_TtC10Kingfisher17AnimatedImageView")
 @interface AnimatedImageView : UIImageView
 @property (nonatomic, strong) UIImage * _Nullable image;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
 @property (nonatomic, readonly, getter=isAnimating) BOOL animating;
+/// Starts the animation.
 - (void)startAnimating;
+/// Stops the animation.
 - (void)stopAnimating;
 - (void)displayLayer:(CALayer * _Nonnull)layer;
 - (void)didMoveToWindow;
@@ -342,9 +343,6 @@ SWIFT_CLASS("_TtC10Kingfisher17AnimatedImageView")
 
 
 
-
-/// Represents the delegate object of the downloader session.
-/// It also behaves like a task manager for downloading.
 SWIFT_CLASS_NAMED("SessionDelegate")
 @interface KFSessionDelegate : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -368,9 +366,6 @@ SWIFT_CLASS_NAMED("SessionDelegate")
 - (void)URLSession:(NSURLSession * _Nonnull)session task:(NSURLSessionTask * _Nonnull)task didReceiveChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
 - (void)URLSession:(NSURLSession * _Nonnull)session task:(NSURLSessionTask * _Nonnull)task willPerformHTTPRedirection:(NSHTTPURLResponse * _Nonnull)response newRequest:(NSURLRequest * _Nonnull)request completionHandler:(void (^ _Nonnull)(NSURLRequest * _Nullable))completionHandler;
 @end
-
-
-
 
 
 

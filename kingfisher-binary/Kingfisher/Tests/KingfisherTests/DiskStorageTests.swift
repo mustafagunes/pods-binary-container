@@ -27,12 +27,7 @@
 import XCTest
 @testable import Kingfisher
 
-#if compiler(>=6)
-extension String: @retroactive DataTransformable { }
-#else
-extension String: DataTransformable { }
-#endif
-extension String {
+extension String: DataTransformable {
     public func toData() throws -> Data {
         return data(using: .utf8)!
     }
@@ -190,8 +185,8 @@ class DiskStorageTests: XCTestCase {
         storage.config.usesHashedFileName = true
         let hashedFileName = storage.cacheFileName(forKey: key)
         XCTAssertNotEqual(hashedFileName, key)
-        // validation sha256 hash of the key
-        XCTAssertEqual(hashedFileName, key.kf.sha256)
+        // validation md5 hash of the key
+        XCTAssertEqual(hashedFileName, key.kf.md5)
 
         // fileName without hash
         storage.config.usesHashedFileName = false
@@ -207,8 +202,8 @@ class DiskStorageTests: XCTestCase {
         storage.config.autoExtAfterHashedFileName = true
         let hashedFileName = storage.cacheFileName(forKey: key)
         XCTAssertNotEqual(hashedFileName, key)
-        // validation sha256 hash of the key
-        XCTAssertEqual(hashedFileName, key.kf.sha256 + ".gif")
+        // validation md5 hash of the key
+        XCTAssertEqual(hashedFileName, key.kf.md5 + ".gif")
 
         // fileName without hash
         storage.config.usesHashedFileName = false
@@ -225,8 +220,8 @@ class DiskStorageTests: XCTestCase {
         storage.config.autoExtAfterHashedFileName = true
         let hashedFileName = storage.cacheFileName(forKey: key)
         XCTAssertNotEqual(hashedFileName, key)
-        // validation sha256 hash of the key
-        XCTAssertEqual(hashedFileName, key.kf.sha256 + ".jpeg")
+        // validation md5 hash of the key
+        XCTAssertEqual(hashedFileName, key.kf.md5 + ".jpeg")
 
         // fileName without hash
         storage.config.usesHashedFileName = false

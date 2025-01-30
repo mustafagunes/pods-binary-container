@@ -330,8 +330,7 @@ class ImageExtensionTests: XCTestCase {
     }
 
     func testDownsamplingWithEdgeCaseSize() {
-
-        // Zero size would fail downsampling before iOS 17.4.
+        // Zero size would fail downsampling before iOS 17,4.
         let result = KingfisherWrapper<KFCrossPlatformImage>.downsampledImage(data: testImageData, to: .zero, scale: 1)
         if #available(iOS 17.4, macOS 14.4, tvOS 17.4, *) {
             XCTAssertEqual(result?.size, CGSize(width: 64, height: 64))
@@ -344,26 +343,4 @@ class ImageExtensionTests: XCTestCase {
         // You can not "downsample" an image to a larger size.
         XCTAssertEqual(largerImage?.size, CGSize(width: 64, height: 64))
     }
-
-    #if os(macOS)
-    func testSVGImageSize() {
-        let svgString = """
-        <?xml version="1.0" encoding="UTF-8"?>
-        <svg width="100px" height="200px" viewBox="0 0 100 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100" height="200" fill="red"/>
-        </svg>
-        """
-        
-        guard let data = svgString.data(using: .utf8),
-              let image = NSImage(data: data)
-        else {
-            XCTFail("Failed to create image from SVG data")
-            return
-        }
-        
-        let size = image.kf.size
-        XCTAssertEqual(size.width, 100)
-        XCTAssertEqual(size.height, 200)
-    }
-    #endif
 }

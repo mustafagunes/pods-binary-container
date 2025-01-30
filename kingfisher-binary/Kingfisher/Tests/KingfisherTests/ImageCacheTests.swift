@@ -43,10 +43,7 @@ class ImageCacheTests: XCTestCase {
     override func tearDown() {
         clearCaches([cache])
         cache = nil
-        if let o = observer {
-            NotificationCenter.default.removeObserver(o)
-            observer = nil
-        }
+        observer = nil
 
         super.tearDown()
     }
@@ -122,19 +119,6 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler:nil)
     }
     
-    func testClearDiskCacheAsync() async throws {
-        let key = testKeys[0]
-        try await cache.store(testImage, original: testImageData, forKey: key, toDisk: true)
-        cache.clearMemoryCache()
-        var cacheResult = self.cache.imageCachedType(forKey: key)
-        XCTAssertTrue(cacheResult.cached)
-        XCTAssertEqual(cacheResult, .disk)
-        
-        await cache.clearDiskCache()
-        cacheResult = cache.imageCachedType(forKey: key)
-        XCTAssertFalse(cacheResult.cached)
-    }
-    
     func testClearMemoryCache() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
@@ -149,15 +133,6 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testClearMemoryCacheAsync() async throws {
-        let key = testKeys[0]
-        try await cache.store(testImage, original: testImageData, forKey: key, toDisk: true)
-        cache.clearMemoryCache()
-        let result = try await cache.retrieveImage(forKey: key)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .disk)
-    }
-    
     func testNoImageFound() {
         let exp = expectation(description: #function)
         cache.retrieveImage(forKey: testKeys[0]) { result in
@@ -166,11 +141,6 @@ class ImageCacheTests: XCTestCase {
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testNoImageFoundAsync() async throws {
-        let result = try await cache.retrieveImage(forKey: testKeys[0])
-        XCTAssertNil(result.image)
     }
 
     func testCachedFileDoesNotExist() {
@@ -194,14 +164,6 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testStoreImageInMemoryAsync() async throws {
-        let key = testKeys[0]
-        try await cache.store(testImage, forKey: key, toDisk: false)
-        let result = try await cache.retrieveImage(forKey: key)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .memory)
-    }
-    
     func testStoreMultipleImages() {
         let exp = expectation(description: #function)
         storeMultipleImages {
@@ -216,14 +178,6 @@ class ImageCacheTests: XCTestCase {
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testStoreMultipleImagesAsync() async throws {
-        await storeMultipleImages()
-    
-        let diskCachePath = cache.diskStorage.directoryURL.path
-        let files = try FileManager.default.contentsOfDirectory(atPath: diskCachePath)
-        XCTAssertEqual(files.count, testKeys.count)
     }
     
     func testCachedFileExists() {
@@ -263,30 +217,6 @@ class ImageCacheTests: XCTestCase {
         
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testCachedFileExistsAsync() async throws {
-        let key = testKeys[0]
-        let url = URL(string: key)!
-        
-        let exists = cache.imageCachedType(forKey: url.cacheKey).cached
-        XCTAssertFalse(exists)
-        
-        var result = try await cache.retrieveImage(forKey: key)
-        XCTAssertNil(result.image)
-        XCTAssertEqual(result.cacheType, .none)
-        
-        try await cache.store(testImage, forKey: key, toDisk: true)
-        
-        result = try await cache.retrieveImage(forKey: key)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .memory)
-        
-        cache.clearMemoryCache()
-        
-        result = try await cache.retrieveImage(forKey: key)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .disk)
-    }
 
     func testCachedFileWithCustomPathExtensionExists() {
         cache.diskStorage.config.pathExtension = "jpg"
@@ -304,30 +234,14 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func testCachedFileWithCustomPathExtensionExistsAsync() async throws {
-        cache.diskStorage.config.pathExtension = "jpg"
-        let key = testKeys[0]
-        let url = URL(string: key)!
-        try await cache.store(testImage, forKey: key, toDisk: true)
-        let cachePath = self.cache.cachePath(forKey: url.cacheKey)
-        XCTAssertTrue(cachePath.hasSuffix(".jpg"))
-    }
   
-    @MainActor func testCachedImageIsFetchedSynchronouslyFromTheMemoryCache() {
+    func testCachedImageIsFetchedSyncronouslyFromTheMemoryCache() {
         cache.store(testImage, forKey: testKeys[0], toDisk: false)
-        var image: KFCrossPlatformImage? = nil
+        var foundImage: KFCrossPlatformImage?
         cache.retrieveImage(forKey: testKeys[0]) { result in
-            MainActor.assumeIsolated {
-                image = try? result.get().image
-            }
+            foundImage = result.value?.image
         }
-        XCTAssertEqual(testImage, image)
-    }
-    
-    func testCachedImageIsFetchedSynchronouslyFromTheMemoryCacheAsync() async throws {
-        try await cache.store(testImage, forKey: testKeys[0], toDisk: false)
-        let result = try await cache.retrieveImage(forKey: testKeys[0])
-        XCTAssertEqual(testImage, result.image)
+        XCTAssertEqual(testImage, foundImage)
     }
 
     func testIsImageCachedForKey() {
@@ -341,40 +255,34 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testIsImageCachedForKeyAsync() async throws {
-        let key = testKeys[0]
-        XCTAssertFalse(cache.imageCachedType(forKey: key).cached)
-        try await cache.store(testImage, original: testImageData, forKey: key, toDisk: true)
-        XCTAssertTrue(cache.imageCachedType(forKey: key).cached)
-    }
-    
     func testCleanDiskCacheNotification() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
 
         cache.diskStorage.config.expiration = .seconds(0.01)
 
-        let selfCache = self.cache
         cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
             self.observer = NotificationCenter.default.addObserver(
                 forName: .KingfisherDidCleanDiskCache,
                 object: self.cache,
-                queue: .main
-            ) { noti in
-                let receivedCache = noti.object as? ImageCache
-                XCTAssertNotNil(receivedCache)
-                XCTAssertTrue(receivedCache === selfCache)
-            
-                guard let hashes = noti.userInfo?[KingfisherDiskCacheCleanedHashKey] as? [String] else {
-                    XCTFail("Notification should contains Strings in key 'KingfisherDiskCacheCleanedHashKey'")
+                queue: .main) {
+                    noti in
+                    let receivedCache = noti.object as? ImageCache
+                    XCTAssertNotNil(receivedCache)
+                    XCTAssertTrue(receivedCache === self.cache)
+                
+                    guard let hashes = noti.userInfo?[KingfisherDiskCacheCleanedHashKey] as? [String] else {
+                        XCTFail("Notification should contains Strings in key 'KingfisherDiskCacheCleanedHashKey'")
+                        exp.fulfill()
+                        return
+                    }
+                
+                    XCTAssertEqual(hashes.count, 1)
+                    XCTAssertEqual(hashes.first!, self.cache.hash(forKey: key))
+                    guard let o = self.observer else { return }
+                    NotificationCenter.default.removeObserver(o)
                     exp.fulfill()
-                    return
                 }
-            
-                XCTAssertEqual(hashes.count, 1)
-                XCTAssertEqual(hashes.first!, selfCache!.hash(forKey: key))
-                exp.fulfill()
-            }
 
             delay(1) {
                 self.cache.cleanExpiredDiskCache()
@@ -396,15 +304,6 @@ class ImageCacheTests: XCTestCase {
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testCannotRetrieveCacheWithProcessorIdentifierAsync() async throws {
-        let key = testKeys[0]
-        let p = RoundCornerImageProcessor(cornerRadius: 40)
-        try await cache.store(testImage, original: testImageData, forKey: key, toDisk: true)
-        let result = try await cache.retrieveImage(forKey: key, options: [.processor(p)])
-        XCTAssertNotNil(result)
-        XCTAssertNil(result.image)
-    }
 
     func testRetrieveCacheWithProcessorIdentifier() {
         let exp = expectation(description: #function)
@@ -425,20 +324,6 @@ class ImageCacheTests: XCTestCase {
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testRetrieveCacheWithProcessorIdentifierAsync() async throws {
-        let key = testKeys[0]
-        let p = RoundCornerImageProcessor(cornerRadius: 40)
-        try await cache.store(
-            testImage,
-            original: testImageData,
-            forKey: key,
-            processorIdentifier: p.identifier,
-            toDisk: true
-        )
-        let result = try await cache.retrieveImage(forKey: key, options: [.processor(p)])
-        XCTAssertNotNil(result.image)
-    }
 
     func testDefaultCache() {
         let exp = expectation(description: #function)
@@ -453,15 +338,6 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testDefaultCacheAsync() async throws {
-        let key = testKeys[0]
-        let cache = ImageCache.default
-        try await cache.store(testImage, forKey: key)
-        XCTAssertTrue(cache.memoryStorage.isCached(forKey: key))
-        XCTAssertTrue(cache.diskStorage.isCached(forKey: key))
-        cleanDefaultCache()
-    }
-    
     func testRetrieveDiskCacheSynchronously() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
@@ -473,14 +349,14 @@ class ImageCacheTests: XCTestCase {
             cacheType = self.cache.imageCachedType(forKey: key)
             XCTAssertEqual(cacheType, .disk)
             
-            let dispatched = LockIsolated(false)
+            var dispatched = false
             self.cache.retrieveImageInDiskCache(forKey: key, options:  [.loadDiskFileSynchronously]) {
                 result in
-                XCTAssertFalse(dispatched.value)
+                XCTAssertFalse(dispatched)
                 exp.fulfill()
             }
             // This should be called after the completion handler above.
-            dispatched.setValue(true)
+            dispatched = true
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -496,14 +372,14 @@ class ImageCacheTests: XCTestCase {
             cacheType = self.cache.imageCachedType(forKey: key)
             XCTAssertEqual(cacheType, .disk)
             
-            let dispatched = LockIsolated(false)
-            self.cache.retrieveImageInDiskCache(forKey: key, options: nil) {
+            var dispatched = false
+            self.cache.retrieveImageInDiskCache(forKey: key, options:  nil) {
                 result in
-                XCTAssertTrue(dispatched.value)
+                XCTAssertTrue(dispatched)
                 exp.fulfill()
             }
             // This should be called before the completion handler above.
-            dispatched.setValue(true)
+            dispatched = true
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -512,91 +388,42 @@ class ImageCacheTests: XCTestCase {
     func testModifierShouldOnlyApplyForFinalResultWhenMemoryLoad() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        
-        let modifierCalled = ActorBox(false)
+
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
-        
+
         cache.store(testImage, original: testImageData, forKey: key) { _ in
             self.cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)]) { result in
+                XCTAssertFalse(modifierCalled)
                 XCTAssertEqual(result.value?.image?.renderingMode, .automatic)
-                Task {
-                    let called = await modifierCalled.value
-                    XCTAssertFalse(called)
-                    exp.fulfill()
-                    
-                }
+                exp.fulfill()
             }
         }
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testModifierShouldOnlyApplyForFinalResultWhenMemoryLoadAsync() async throws {
-        let key = testKeys[0]
-
-        let modifierCalled = ActorBox(false)
-        let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
-            return image.withRenderingMode(.alwaysTemplate)
-        }
-
-        try await cache.store(testImage, original: testImageData, forKey: key)
-        let result = try await cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)])
-        let called = await modifierCalled.value
-        XCTAssertFalse(called)
-        XCTAssertEqual(result.image?.renderingMode, .automatic)
     }
 
     func testModifierShouldOnlyApplyForFinalResultWhenDiskLoad() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
 
-        let modifierCalled = ActorBox(false)
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
 
         cache.store(testImage, original: testImageData, forKey: key) { _ in
             self.cache.clearMemoryCache()
             self.cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)]) { result in
+                XCTAssertFalse(modifierCalled)
                 XCTAssertEqual(result.value?.image?.renderingMode, .automatic)
-                Task {
-                    let called = await modifierCalled.value
-                    XCTAssertFalse(called)
-                    exp.fulfill()
-                }
+                exp.fulfill()
             }
         }
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testModifierShouldOnlyApplyForFinalResultWhenDiskLoadAsync() async throws {
-        let key = testKeys[0]
-        let modifierCalled = ActorBox(false)
-        let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
-            return image.withRenderingMode(.alwaysTemplate)
-        }
-        
-        try await cache.store(testImage, original: testImageData, forKey: key)
-        cache.clearMemoryCache()
-        let result = try await cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)])
-        let called = await modifierCalled.value
-        XCTAssertFalse(called)
-        // The renderingMode is expected to be the default value `.automatic`. The image modifier should only apply to
-        // the image manager result.
-        XCTAssertEqual(result.image?.renderingMode, .automatic)
     }
 #endif
     
@@ -620,21 +447,6 @@ class ImageCacheTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testStoreToMemoryWithExpirationAsync() async throws {
-        let key = testKeys[0]
-        try await cache.store(
-            testImage,
-            original: testImageData,
-            forKey: key,
-            options: KingfisherParsedOptionsInfo([.memoryCacheExpiration(.seconds(0.2))]),
-            toDisk: true
-        )
-        XCTAssertEqual(self.cache.imageCachedType(forKey: key), .memory)
-        // After 1 sec, the cache only remains on disk.
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC)
-        XCTAssertEqual(self.cache.imageCachedType(forKey: key), .disk)
-    }
-    
     func testStoreToDiskWithExpiration() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
@@ -652,21 +464,6 @@ class ImageCacheTests: XCTestCase {
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testStoreToDiskWithExpirationAsync() async throws {
-        let key = testKeys[0]
-        try await cache.store(
-            testImage,
-            original: testImageData,
-            forKey: key,
-            options: KingfisherParsedOptionsInfo([.diskCacheExpiration(.expired)]),
-            toDisk: true
-        )
-        
-        XCTAssertEqual(self.cache.imageCachedType(forKey: key), .memory)
-        self.cache.clearMemoryCache()
-        XCTAssertEqual(self.cache.imageCachedType(forKey: key), .none)
     }
 
     func testCalculateDiskStorageSize() {
@@ -755,146 +552,19 @@ class ImageCacheTests: XCTestCase {
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
-
+    
+    #if swift(>=5.5)
+    #if canImport(_Concurrency)
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
     func testCalculateDiskStorageSizeAsync() async throws {
         let size = try await cache.diskStorageSize
         XCTAssertEqual(size, 0)
-        await storeMultipleImages()
-        let newSize = try await cache.diskStorageSize
-        XCTAssertEqual(newSize, UInt(testImagePNGData.count * testKeys.count))
+        _ = await storeMultipleImagesAsync()
+        let sizeAfterStoreMultipleImages = try await cache.diskStorageSize
+        XCTAssertEqual(sizeAfterStoreMultipleImages, UInt(testImagePNGData.count * testKeys.count))
     }
-    
-    func testStoreFileWithForcedExtension() async throws {
-        let key = testKeys[0]
-        try await cache.store(testImage, forKey: key, forcedExtension: "jpg", toDisk: true)
-    
-        let pathWithoutExtension = cache.cachePath(forKey: key)
-        XCTAssertFalse(FileManager.default.fileExists(atPath: pathWithoutExtension))
-        
-        let pathWithExtension = cache.cachePath(forKey: key, forcedExtension: "jpg")
-        XCTAssertTrue(FileManager.default.fileExists(atPath: pathWithExtension))
-        
-        XCTAssertEqual(cache.imageCachedType(forKey: key), .memory)
-        XCTAssertEqual(cache.imageCachedType(forKey: key, forcedExtension: "jpg"), .memory)
-        
-        cache.clearMemoryCache()
-        XCTAssertEqual(cache.imageCachedType(forKey: key), .none)
-        XCTAssertEqual(cache.imageCachedType(forKey: key, forcedExtension: "jpg"), .disk)
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskNotCached() {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url)
-        
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .heic
-        )
-            
-        // Not cached
-        XCTAssertNil(fileURL)
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskCachedWithWrongFileType() async throws {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url, fileType: .heic)
-        
-        // Cache without a file type extension
-        try await cache.storeToDisk(
-            testImageData,
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier
-        )
-        
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .heic
-        )
-            
-        // Not cached
-        XCTAssertNil(fileURL)
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskCachedWithExplicitFileType() async throws {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url, fileType: .heic)
-        
-        // Cache without a file type extension
-        try await cache.storeToDisk(
-            testImageData,
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: "heic"
-        )
-        
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .heic
-        )
-
-        let result = try XCTUnwrap(fileURL)
-        XCTAssertTrue(result.absoluteString.hasSuffix(".heic"))
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskCachedGuessingFileTypeNotHit() async throws {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url, fileType: .heic)
-
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .other("")
-        )
-
-        XCTAssertNil(fileURL)
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskCachedGuessingFileType() async throws {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url, fileType: .heic)
-        
-        // Cache without a file type extension
-        try await cache.storeToDisk(
-            testImageData,
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: "heic"
-        )
-        
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .other("")
-        )
-
-        let result = try XCTUnwrap(fileURL)
-        XCTAssertTrue(result.absoluteString.hasSuffix(".heic"))
-    }
-    
-    func testPossibleCacheFileURLIfOnDiskCachedArbitraryFileType() async throws {
-        let url = URL(string: "https://example.com/photo")!
-        let resource = LivePhotoResource(downloadURL: url, fileType: .heic)
-        
-        // Cache without a file type extension
-        try await cache.storeToDisk(
-            testImageData,
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: "myExt"
-        )
-        
-        let fileURL = cache.possibleCacheFileURLIfOnDisk(
-            forKey: resource.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            referenceFileType: .other("myExt")
-        )
-
-        let result = try XCTUnwrap(fileURL)
-        XCTAssertTrue(result.absoluteString.hasSuffix(".myExt"))
-    }
+    #endif
+    #endif
     
     // MARK: - Helper
     private func storeMultipleImages(_ completionHandler: @escaping () -> Void) {
@@ -907,108 +577,17 @@ class ImageCacheTests: XCTestCase {
         }
         group.notify(queue: .main, execute: completionHandler)
     }
-    
-    private func storeMultipleImages() async {
-        await withCheckedContinuation {
-            storeMultipleImages($0.resume)
+
+    #if swift(>=5.5)
+    #if canImport(_Concurrency)
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+    private func storeMultipleImagesAsync() async {
+        await withCheckedContinuation { continuation in
+            storeMultipleImages {
+                continuation.resume()
+            }
         }
     }
-}
-
-@dynamicMemberLookup
-public final class LockIsolated<Value>: @unchecked Sendable {
-  private var _value: Value
-  private let lock = NSRecursiveLock()
-
-  /// Initializes lock-isolated state around a value.
-  ///
-  /// - Parameter value: A value to isolate with a lock.
-  public init(_ value: @autoclosure @Sendable () throws -> Value) rethrows {
-    self._value = try value()
-  }
-
-  public subscript<Subject: Sendable>(dynamicMember keyPath: KeyPath<Value, Subject>) -> Subject {
-    self.lock.sync {
-      self._value[keyPath: keyPath]
-    }
-  }
-
-  /// Perform an operation with isolated access to the underlying value.
-  ///
-  /// Useful for modifying a value in a single transaction.
-  ///
-  /// ```swift
-  /// // Isolate an integer for concurrent read/write access:
-  /// var count = LockIsolated(0)
-  ///
-  /// func increment() {
-  ///   // Safely increment it:
-  ///   self.count.withValue { $0 += 1 }
-  /// }
-  /// ```
-  ///
-  /// - Parameter operation: An operation to be performed on the the underlying value with a lock.
-  /// - Returns: The result of the operation.
-  public func withValue<T: Sendable>(
-    _ operation: @Sendable (inout Value) throws -> T
-  ) rethrows -> T {
-    try self.lock.sync {
-      var value = self._value
-      defer { self._value = value }
-      return try operation(&value)
-    }
-  }
-
-  /// Overwrite the isolated value with a new value.
-  ///
-  /// ```swift
-  /// // Isolate an integer for concurrent read/write access:
-  /// var count = LockIsolated(0)
-  ///
-  /// func reset() {
-  ///   // Reset it:
-  ///   self.count.setValue(0)
-  /// }
-  /// ```
-  ///
-  /// > Tip: Use ``withValue(_:)`` instead of ``setValue(_:)`` if the value being set is derived
-  /// > from the current value. That is, do this:
-  /// >
-  /// > ```swift
-  /// > self.count.withValue { $0 += 1 }
-  /// > ```
-  /// >
-  /// > ...and not this:
-  /// >
-  /// > ```swift
-  /// > self.count.setValue(self.count + 1)
-  /// > ```
-  /// >
-  /// > ``withValue(_:)`` isolates the entire transaction and avoids data races between reading and
-  /// > writing the value.
-  ///
-  /// - Parameter newValue: The value to replace the current isolated value with.
-  public func setValue(_ newValue: @autoclosure @Sendable () throws -> Value) rethrows {
-    try self.lock.sync {
-      self._value = try newValue()
-    }
-  }
-}
-
-extension LockIsolated where Value: Sendable {
-  /// The lock-isolated value.
-  public var value: Value {
-    self.lock.sync {
-      self._value
-    }
-  }
-}
-
-extension NSRecursiveLock {
-  @inlinable @discardableResult
-  @_spi(Internals) public func sync<R>(work: () throws -> R) rethrows -> R {
-    self.lock()
-    defer { self.unlock() }
-    return try work()
-  }
+    #endif
+    #endif
 }

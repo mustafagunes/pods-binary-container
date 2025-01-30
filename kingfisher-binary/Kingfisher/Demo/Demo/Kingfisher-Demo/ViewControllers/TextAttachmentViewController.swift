@@ -46,11 +46,10 @@ class TextAttachmentViewController: UIViewController {
         attributedText.replaceCharacters(in: NSRange(), with: NSAttributedString(attachment: textAttachment))
         label.attributedText = attributedText
 
-        let label = getLabel()
         KF.url(URL(string: "https://onevcat.com/assets/images/avatar.jpg")!)
             .resizing(referenceSize: CGSize(width: 30, height: 30))
             .roundCorner(radius: .point(15))
-            .set(to: textAttachment, attributedView: label)
+            .set(to: textAttachment, attributedView: self.getLabel())
     }
     
     func getLabel() -> UILabel {

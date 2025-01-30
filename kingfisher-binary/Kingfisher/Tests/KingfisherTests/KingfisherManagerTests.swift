@@ -27,33 +27,6 @@
 import XCTest
 @testable import Kingfisher
 
-actor CallingChecker {
-    var called = false
-    func mark() {
-        called = true
-    }
-    
-    func checkCancelBehavior(
-        stub: LSStubResponseDSL,
-        block: @escaping () async throws -> Void
-    ) async throws {
-        let task = Task {
-            do {
-                _ = try await block()
-                XCTFail()
-            } catch {
-                mark()
-                XCTAssertTrue((error as! KingfisherError).isTaskCancelled)
-            }
-        }
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC / 10)
-        task.cancel()
-        _ = stub.go()
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC / 10)
-        XCTAssertTrue(called)
-    }
-}
-
 class KingfisherManagerTests: XCTestCase {
     
     var manager: KingfisherManager!
@@ -116,32 +89,6 @@ class KingfisherManagerTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testRetrieveImageAsync() async throws {
-        let url = testURLs[0]
-        stub(url, data: testImageData)
-
-        let manager = self.manager!
-        
-        var result = try await manager.retrieveImage(with: url)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .none)
-        
-        result = try await manager.retrieveImage(with: url)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .memory)
-        
-        manager.cache.clearMemoryCache()
-        result = try await manager.retrieveImage(with: url)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .disk)
-        
-        manager.cache.clearMemoryCache()
-        await manager.cache.clearDiskCache()
-        result = try await manager.retrieveImage(with: url)
-        XCTAssertNotNil(result.image)
-        XCTAssertEqual(result.cacheType, .none)
-    }
-    
     func testRetrieveImageWithProcessor() {
         let exp = expectation(description: #function)
         let url = testURLs[0]
@@ -202,35 +149,7 @@ class KingfisherManagerTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testRetrieveImageCancel() {
-        let exp = expectation(description: #function)
-        let url = testURLs[0]
-        let stub = delayedStub(url, data: testImageData, length: 123)
-
-        let task = manager.retrieveImage(with: url) {
-            result in
-            XCTAssertNotNil(result.error)
-            XCTAssertTrue(result.error!.isTaskCancelled)
-            exp.fulfill()
-        }
-
-        XCTAssertNotNil(task)
-        task?.cancel()
-        _ = stub.go()
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testRetrieveImageCancelAsync() async throws {
-        let url = testURLs[0]
-        let stub = delayedStub(url, data: testImageData, length: 123)
-
-        let checker = CallingChecker()
-        try await checker.checkCancelBehavior(stub: stub) {
-            _ = try await self.manager.retrieveImage(with: url)
-        }
-    }
-    
-    func testSuccessCompletionHandlerRunningOnMainQueueByDefault() {
+    func testSuccessCompletionHandlerRunningOnMainQueueDefaultly() {
         let progressExpectation = expectation(description: "progressBlock running on main queue")
         let completionExpectation = expectation(description: "completionHandler running on main queue")
 
@@ -267,7 +186,7 @@ class KingfisherManagerTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func testErrorCompletionHandlerRunningOnMainQueueByDefault() {
+    func testErrorCompletionHandlerRunningOnMainQueueDefaultly() {
         let exp = expectation(description: #function)
         let url = testURLs[0]
         stub(url, data: testImageData, statusCode: 404)
@@ -281,7 +200,7 @@ class KingfisherManagerTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func testSuccessCompletionHandlerRunningOnCustomQueue() {
+    func testSucessCompletionHandlerRunningOnCustomQueue() {
         let progressExpectation = expectation(description: "progressBlock running on custom queue")
         let completionExpectation = expectation(description: "completionHandler running on custom queue")
 
@@ -463,13 +382,11 @@ class KingfisherManagerTests: XCTestCase {
     
     func testFailingProcessOnDataProviderImage() {
         let provider = SimpleImageDataProvider(cacheKey: "key") { .success(testImageData) }
-        let called = ActorBox(false)
+        var called = false
         let p = FailingProcessor()
         let options = [KingfisherOptionsInfoItem.processor(p), .processingQueue(.mainCurrentOrAsync)]
         _ = manager.retrieveImage(with: .provider(provider), options: options) { result in
-            Task {
-                await called.setValue(true)
-            }
+            called = true
             XCTAssertNotNil(result.error)
             if case .processorError(reason: .processingFailed(let processor, _)) = result.error! {
                 XCTAssertEqual(processor.identifier, p.identifier)
@@ -477,10 +394,7 @@ class KingfisherManagerTests: XCTestCase {
                 XCTFail()
             }
         }
-        Task {
-            let result = await called.value
-            XCTAssertTrue(result)
-        }
+        XCTAssertTrue(called)
     }
     
     func testCacheOriginalImageWithOriginalCache() {
@@ -592,7 +506,7 @@ class KingfisherManagerTests: XCTestCase {
         let options1: KingfisherOptionsInfo = [.processor(p1), .cacheSerializer(s), .waitForCache]
         let source = Source.network(url)
         
-        manager.retrieveImage(with: source, options: options1) { [s] result in
+        manager.retrieveImage(with: source, options: options1) { result in
             XCTAssertTrue(p1.processed)
             
             let p2 = SimpleProcessor()
@@ -747,21 +661,16 @@ class KingfisherManagerTests: XCTestCase {
         let exp = expectation(description: #function)
         let url = testURLs[0]
         stub(url, data: testImageData)
-        
-        let modifierCalled = ActorBox(false)
+
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
         manager.retrieveImage(with: url, options: [.imageModifier(modifier)]) { result in
+            XCTAssertTrue(modifierCalled)
             XCTAssertEqual(result.value?.image.renderingMode, .alwaysTemplate)
-            Task {
-                let called = await modifierCalled.value
-                XCTAssertTrue(called)
-                exp.fulfill()
-            }
+            exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -771,23 +680,18 @@ class KingfisherManagerTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
         
-        let modifierCalled = ActorBox(false)
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
 
         manager.cache.store(testImage, forKey: url.cacheKey)
         manager.retrieveImage(with: url, options: [.imageModifier(modifier)]) { result in
+            XCTAssertTrue(modifierCalled)
             XCTAssertEqual(result.value?.cacheType, .memory)
             XCTAssertEqual(result.value?.image.renderingMode, .alwaysTemplate)
-            Task {
-                let called = await modifierCalled.value
-                XCTAssertTrue(called)
-                exp.fulfill()
-            }
+            exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -797,23 +701,18 @@ class KingfisherManagerTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
 
-        let modifierCalled = ActorBox(false)
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
 
         manager.cache.store(testImage, forKey: url.cacheKey) { _ in
             self.manager.cache.clearMemoryCache()
             self.manager.retrieveImage(with: url, options: [.imageModifier(modifier)]) { result in
+                XCTAssertTrue(modifierCalled)
                 XCTAssertEqual(result.value!.cacheType, .disk)
                 XCTAssertEqual(result.value!.image.renderingMode, .alwaysTemplate)
-                Task {
-                    let result = await modifierCalled.value
-                    XCTAssertTrue(result)
-                }
                 exp.fulfill()
             }
         }
@@ -825,14 +724,13 @@ class KingfisherManagerTests: XCTestCase {
         let url = testURLs[0]
         stub(url, data: testImageData)
 
-        let modifierCalled = ActorBox(false)
+        var modifierCalled = false
         let modifier = AnyImageModifier { image in
-            Task {
-                await modifierCalled.setValue(true)
-            }
+            modifierCalled = true
             return image.withRenderingMode(.alwaysTemplate)
         }
         manager.retrieveImage(with: url, options: [.imageModifier(modifier)]) { result in
+            XCTAssertTrue(modifierCalled)
             XCTAssertEqual(result.value?.image.renderingMode, .alwaysTemplate)
 
             let memoryCached = self.manager.cache.retrieveImageInMemoryCache(forKey: url.absoluteString)
@@ -843,11 +741,7 @@ class KingfisherManagerTests: XCTestCase {
                 XCTAssertNotNil(result.value!)
                 XCTAssertEqual(result.value??.renderingMode, .automatic)
 
-                Task {
-                    let result = await modifierCalled.value
-                    XCTAssertTrue(result)
-                    exp.fulfill()
-                }
+                exp.fulfill()
             }
         }
         
@@ -858,40 +752,30 @@ class KingfisherManagerTests: XCTestCase {
     
     func testRetrieveWithImageProvider() {
         let provider = SimpleImageDataProvider(cacheKey: "key") { .success(testImageData) }
-        let called = ActorBox(false)
+        var called = false
         manager.defaultOptions = .empty
         _ = manager.retrieveImage(with: .provider(provider), options: [.processingQueue(.mainCurrentOrAsync)]) {
             result in
+            called = true
             XCTAssertNotNil(result.value)
             XCTAssertTrue(result.value!.image.renderEqual(to: testImage))
-            Task {
-                await called.setValue(true)
-            }
         }
-        Task {
-            let result = await called.value
-            XCTAssertTrue(result)
-        }
+        XCTAssertTrue(called)
     }
     
     func testRetrieveWithImageProviderFail() {
         let provider = SimpleImageDataProvider(cacheKey: "key") { .failure(SimpleImageDataProvider.E()) }
-        let called = ActorBox(false)
+        var called = false
         _ = manager.retrieveImage(with: .provider(provider)) { result in
+            called = true
             XCTAssertNotNil(result.error)
             if case .imageSettingError(reason: .dataProviderError(_, let error)) = result.error! {
                 XCTAssertTrue(error is SimpleImageDataProvider.E)
             } else {
                 XCTFail()
             }
-            Task {
-                await called.setValue(true)
-            }
         }
-        Task {
-            let result = await called.value
-            XCTAssertTrue(result)
-        }
+        XCTAssertTrue(called)
     }
 
     func testContextRemovingAlternativeSource() {
@@ -900,7 +784,7 @@ class KingfisherManagerTests: XCTestCase {
             .network(URL(string: "2")!)
         ]
         let info = KingfisherParsedOptionsInfo([.alternativeSources(allSources)])
-        let context = RetrievingContext<Source>(
+        let context = RetrievingContext(
             options: info, originalSource: .network(URL(string: "0")!))
 
         let source1 = context.popAlternativeSource()
@@ -995,27 +879,21 @@ class KingfisherManagerTests: XCTestCase {
         let brokenURL = URL(string: "brokenurl")!
         stub(brokenURL, data: Data())
 
-        let downloadTaskUpdatedCount = ActorBox(0)
+        var downloadTaskUpdatedCount = 0
         let task = manager.retrieveImage(
           with: .network(brokenURL),
           options: [.alternativeSources([.network(url)])],
           downloadTaskUpdated: { newTask in
-              Task {
-                  let value = await downloadTaskUpdatedCount.value + 1
-                  await downloadTaskUpdatedCount.setValue(value)
-              }
-              XCTAssertEqual(newTask?.sessionTask?.task.currentRequest?.url, url)
+            downloadTaskUpdatedCount += 1
+            XCTAssertEqual(newTask?.sessionTask.task.currentRequest?.url, url)
           })
-        {
+          {
             result in
-            Task {
-                let result = await downloadTaskUpdatedCount.value
-                XCTAssertEqual(result, 1)
-                exp.fulfill()
-            }
+            XCTAssertEqual(downloadTaskUpdatedCount, 1)
+            exp.fulfill()
         }
 
-        XCTAssertEqual(task?.sessionTask?.task.currentRequest?.url, brokenURL)
+        XCTAssertEqual(task?.sessionTask.task.currentRequest?.url, brokenURL)
 
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -1047,21 +925,17 @@ class KingfisherManagerTests: XCTestCase {
         let exp = expectation(description: #function)
         let url = testURLs[0]
         let dataStub = delayedStub(url, data: testImageData)
-        
-        let called = ActorBox(false)
 
         let brokenURL = URL(string: "brokenurl")!
         stub(brokenURL, data: Data())
 
-        let task = manager.retrieveImage(
+        var task: DownloadTask!
+        task = manager.retrieveImage(
             with: .network(brokenURL),
             options: [.alternativeSources([.network(url)])],
             downloadTaskUpdated: { newTask in
-                XCTAssertNotNil(newTask)
-                newTask?.cancel()
-                Task {
-                    await called.setValue(true)
-                }
+                task = newTask
+                task.cancel()
             }
         )
         {
@@ -1071,16 +945,9 @@ class KingfisherManagerTests: XCTestCase {
 
             delay(0.1) {
                 _ = dataStub.go()
-                Task {
-                    let result = await called.value
-                    XCTAssertTrue(result)
-                    exp.fulfill()
-                }
+                exp.fulfill()
             }
         }
-        
-        XCTAssertNotNil(task)
-        XCTAssertTrue(task!.isInitialized)
 
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -1197,30 +1064,18 @@ class KingfisherManagerTests: XCTestCase {
         
         stub(url, data: testImageData)
         
-        let task = ActorBox<DownloadTask?>(nil)
-        
-        let called = ActorBox(false)
-        
-        let t: DownloadTask? = manager.retrieveImage(with: url) { result in
-            Task {
-                let calledResult = await called.value
-                XCTAssertFalse(calledResult)
-                XCTAssertNotNil(result.value?.image)
-                
-                if !calledResult {
-                    Task {
-                        await task.value?.cancel()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        exp.fulfill()
-                    }
-                } else {
-                    XCTFail("Callback should not be invoked again.")
+        var task: DownloadTask?
+        var called = false
+        task = manager.retrieveImage(with: url) { result in
+            XCTAssertFalse(called)
+            XCTAssertNotNil(result.value?.image)
+            if !called {
+                called = true
+                task?.cancel()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    exp.fulfill()
                 }
             }
-        }
-        Task {
-            await task.setValue(t)
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -1351,338 +1206,6 @@ class KingfisherManagerTests: XCTestCase {
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testAnimatedImageShouldNotRecreateWithSameOptions() {
-        let exp = expectation(description: #function)
-        let url = testURLs[0]
-        let data = testImageGIFData
-        stub(url, data: data)
-        let p = SimpleProcessor()
-        manager.retrieveImage(with: url, options: [.processor(p), .onlyLoadFirstFrame]) { result in
-            XCTAssertTrue(p.processed)
-            XCTAssertTrue(result.value!.image.creatingOptions!.onlyFirstFrame)
-            p.processed = false
-            self.manager.retrieveImage(with: url, options: [.processor(p), .onlyLoadFirstFrame]) { result in
-                XCTAssertFalse(p.processed)
-                XCTAssertTrue(result.value!.image.creatingOptions!.onlyFirstFrame)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testMissingResourceOfLivePhotoFound() {
-        let resource = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let source = LivePhotoSource(resources: [resource])
-        
-        let missing = manager.missingResources(source, options: .init(.empty))
-        XCTAssertEqual(missing.count, 1)
-    }
-    
-    func testMissingResourceOfLivePhotoNotFound() async throws {
-        let resource = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource.cacheKey,
-            forcedExtension: resource.downloadURL.pathExtension
-        )
-        
-        let source = LivePhotoSource(resources: [resource])
-        let missing = manager.missingResources(source, options: .init(.empty))
-        XCTAssertEqual(missing.count, 0)
-    }
-    
-    func testMissingResourceOfLivePhotoFoundOne() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource1.cacheKey,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let missing = manager.missingResources(source, options: .init(.empty))
-        XCTAssertEqual(missing.count, 1)
-        XCTAssertEqual(missing[0].downloadURL, resource2.downloadURL)
-    }
-    
-    func testMissingResourceOfLivePhotoForceRefresh() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource1.cacheKey,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let missing = manager.missingResources(source, options: .init([.forceRefresh]))
-        XCTAssertEqual(missing.count, 2)
-        XCTAssertEqual(missing[0].downloadURL, resource1.downloadURL)
-        XCTAssertEqual(missing[1].downloadURL, resource2.downloadURL)
-    }
-    
-    func testDownloadAndCacheLivePhotoResourcesAll() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        
-        stub(resource1.downloadURL, data: testImageData)
-        stub(resource2.downloadURL, data: testImageData)
-        
-        let result = try await manager.downloadAndCache(
-            resources: [resource1, resource2].map { LivePhotoResource.init(resource: $0)
-            },
-            options: .init(.empty))
-        XCTAssertEqual(result.count, 2)
-        
-        let urls = result.compactMap(\.url)
-        XCTAssertTrue(urls.contains(LivePhotoURL.mov))
-        XCTAssertTrue(urls.contains(LivePhotoURL.heic))
-        
-        let resourceCached1 = manager.cache.imageCachedType(
-            forKey: resource1.cacheKey,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        let resourceCached2 = manager.cache.imageCachedType(
-            forKey: resource2.cacheKey,
-            forcedExtension: resource2.downloadURL.pathExtension
-        )
-        XCTAssertEqual(resourceCached1, .disk)
-        XCTAssertEqual(resourceCached2, .disk)
-    }
-    
-    func testRetrieveLivePhotoFromNetwork() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        
-        stub(resource1.downloadURL, data: testImageData)
-        stub(resource2.downloadURL, data: testImageData)
-        
-        let resource1Cached = manager.cache.isCached(
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier
-        )
-        let resource2Cached = manager.cache.isCached(
-            forKey: resource2.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier
-        )
-        XCTAssertFalse(resource1Cached)
-        XCTAssertFalse(resource2Cached)
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let result = try await manager.retrieveLivePhoto(with: source)
-        XCTAssertEqual(result.fileURLs.count, 2)
-        result.fileURLs.forEach { url in
-            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
-        }
-        XCTAssertEqual(result.cacheType, .none)
-        XCTAssertEqual(result.data(), [testImageData, testImageData])
-        let urlsInSource = result.source.resources.map(\.downloadURL)
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.mov))
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.heic))
-    }
-    
-    func testRetrieveLivePhotoFromLocal() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource2.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource2.downloadURL.pathExtension
-        )
-        
-        let resource1Cached = manager.cache.isCached(
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        let resource2Cached = manager.cache.isCached(
-            forKey: resource2.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource2.downloadURL.pathExtension
-        )
-        XCTAssertTrue(resource1Cached)
-        XCTAssertTrue(resource2Cached)
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let result = try await manager.retrieveLivePhoto(with: source)
-        XCTAssertEqual(result.fileURLs.count, 2)
-        result.fileURLs.forEach { url in
-            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
-        }
-        XCTAssertEqual(result.cacheType, .disk)
-        XCTAssertEqual(result.data(), [])
-        let urlsInSource = result.source.resources.map(\.downloadURL)
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.mov))
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.heic))
-    }
-    
-    func testRetrieveLivePhotoMixed() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        
-        try await manager.cache.storeToDisk(
-            testImageData,
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        stub(resource2.downloadURL, data: testImageData)
-        
-        let resource1Cached = manager.cache.isCached(
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        let resource2Cached = manager.cache.isCached(
-            forKey: resource2.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource2.downloadURL.pathExtension
-        )
-        XCTAssertTrue(resource1Cached)
-        XCTAssertFalse(resource2Cached)
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let result = try await manager.retrieveLivePhoto(with: source)
-        XCTAssertEqual(result.fileURLs.count, 2)
-        result.fileURLs.forEach { url in
-            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
-        }
-        XCTAssertEqual(result.cacheType, .none)
-        XCTAssertEqual(result.data(), [testImageData])
-        let urlsInSource = result.source.resources.map(\.downloadURL)
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.mov))
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.heic))
-    }
-    
-    func testRetrieveLivePhotoNetworkThenCache() async throws {
-        let resource1 = KF.ImageResource(downloadURL: LivePhotoURL.mov)
-        let resource2 = KF.ImageResource(downloadURL: LivePhotoURL.heic)
-        
-        stub(resource1.downloadURL, data: testImageData)
-        stub(resource2.downloadURL, data: testImageData)
-        
-        let resource1Cached = manager.cache.isCached(
-            forKey: resource1.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource1.downloadURL.pathExtension
-        )
-        let resource2Cached = manager.cache.isCached(
-            forKey: resource2.cacheKey,
-            processorIdentifier: LivePhotoImageProcessor.default.identifier,
-            forcedExtension: resource2.downloadURL.pathExtension
-        )
-        XCTAssertFalse(resource1Cached)
-        XCTAssertFalse(resource2Cached)
-        
-        let source = LivePhotoSource(resources: [resource1, resource2])
-        let result = try await manager.retrieveLivePhoto(with: source)
-        XCTAssertEqual(result.fileURLs.count, 2)
-        result.fileURLs.forEach { url in
-            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
-        }
-        XCTAssertEqual(result.cacheType, .none)
-        XCTAssertEqual(result.data(), [testImageData, testImageData])
-        let urlsInSource = result.source.resources.map(\.downloadURL)
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.mov))
-        XCTAssertTrue(urlsInSource.contains(LivePhotoURL.heic))
-        
-        let localResult = try await manager.retrieveLivePhoto(with: source)
-        XCTAssertEqual(localResult.fileURLs.count, 2)
-        XCTAssertEqual(localResult.cacheType, .disk)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithEmptyResources() async throws {
-        let result = try await manager.downloadAndCache(resources: [], options: .init([]))
-        XCTAssertTrue(result.isEmpty)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithSingleResource() async throws {
-        let resource = LivePhotoResource(downloadURL: LivePhotoURL.heic)
-        stub(resource.downloadURL!, data: testImageData)
-        
-        let result = try await manager.downloadAndCache(resources: [resource], options: .init([]))
-        XCTAssertEqual(result.count, 1)
-        
-        let t = manager.cache.imageCachedType(forKey: resource.cacheKey, forcedExtension: "heic")
-        XCTAssertEqual(t, .disk)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithSingleResourceGuessingUnsupportedExtension() async throws {
-        let resource = LivePhotoResource(downloadURL: URL(string: "https://example.com")!)
-        stub(resource.downloadURL!, data: testImageData)
-        
-        XCTAssertEqual(resource.referenceFileType, .other(""))
-        
-        let result = try await manager.downloadAndCache(resources: [resource], options: .init([]))
-        XCTAssertEqual(result.count, 1)
-        
-        var cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey, forcedExtension: "heic")
-        XCTAssertEqual(cacheType, .none)
-        
-        cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey)
-        XCTAssertEqual(cacheType, .disk)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithSingleResourceExplicitSetExtension() async throws {
-        let resource = LivePhotoResource(downloadURL: URL(string: "https://example.com")!, fileType: .heic)
-        stub(resource.downloadURL!, data: testImageData)
-        
-        XCTAssertEqual(resource.referenceFileType, .heic)
-        
-        let result = try await manager.downloadAndCache(resources: [resource], options: .init([]))
-        XCTAssertEqual(result.count, 1)
-        
-        var cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey, forcedExtension: "heic")
-        XCTAssertEqual(cacheType, .disk)
-        
-        cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey)
-        XCTAssertEqual(cacheType, .none)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithSingleResourceGuessingHEICExtension() async throws {
-        let resource = LivePhotoResource(downloadURL: URL(string: "https://example.com")!)
-        stub(resource.downloadURL!, data: partitalHEICData)
-        
-        XCTAssertEqual(resource.referenceFileType, .other(""))
-        
-        let result = try await manager.downloadAndCache(resources: [resource], options: .init([]))
-        XCTAssertEqual(result.count, 1)
-        
-        var cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey, forcedExtension: "heic")
-        XCTAssertEqual(cacheType, .disk)
-        
-        cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey)
-        XCTAssertEqual(cacheType, .none)
-    }
-    
-    func testDownloadAndCacheLivePhotoWithSingleResourceGuessingMOVExtension() async throws {
-        let resource = LivePhotoResource(downloadURL: URL(string: "https://example.com")!)
-        stub(resource.downloadURL!, data: partitalMOVData)
-        
-        XCTAssertEqual(resource.referenceFileType, .other(""))
-        
-        let result = try await manager.downloadAndCache(resources: [resource], options: .init([]))
-        XCTAssertEqual(result.count, 1)
-        
-        var cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey, forcedExtension: "mov")
-        XCTAssertEqual(cacheType, .disk)
-        
-        cacheType = manager.cache.imageCachedType(forKey: resource.cacheKey)
-        XCTAssertEqual(cacheType, .none)
-    }
 }
 
 private var imageCreatingOptionsKey: Void?
@@ -1694,7 +1217,7 @@ extension KFCrossPlatformImage {
     }
 }
 
-final class SimpleProcessor: ImageProcessor, @unchecked Sendable {
+class SimpleProcessor: ImageProcessor {
     public let identifier = "id"
     var processed = false
     /// Initialize a `DefaultImageProcessor`
@@ -1722,7 +1245,7 @@ final class SimpleProcessor: ImageProcessor, @unchecked Sendable {
     }
 }
 
-final class FailingProcessor: ImageProcessor, @unchecked Sendable {
+class FailingProcessor: ImageProcessor {
     public let identifier = "FailingProcessor"
     var processed = false
     public init() {}
@@ -1732,35 +1255,13 @@ final class FailingProcessor: ImageProcessor, @unchecked Sendable {
     }
 }
 
-struct SimpleImageDataProvider: ImageDataProvider, @unchecked Sendable {
+struct SimpleImageDataProvider: ImageDataProvider {
     let cacheKey: String
-    let provider: () -> (Result<Data, any Error>)
+    let provider: () -> (Result<Data, Error>)
     
-    func data(handler: @escaping (Result<Data, any Error>) -> Void) {
+    func data(handler: @escaping (Result<Data, Error>) -> Void) {
         handler(provider())
     }
     
     struct E: Error {}
-}
-
-actor ActorBox<T> {
-    var value: T
-    init(_ value: T) {
-        self.value = value
-    }
-    
-    func setValue(_ value: T) {
-        self.value = value
-    }
-}
-
-actor ActorArray<Element> {
-    var value: [Element]
-    init(_ value: [Element]) {
-        self.value = value
-    }
-    
-    func append(_ newElement: Element) {
-        value.append(newElement)
-    }
 }

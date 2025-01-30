@@ -103,32 +103,25 @@ class RetryStrategyTests: XCTestCase {
     }
 
     func testDelayRetryStrategyExceededCount() {
-        let exp = expectation(description: #function)
-        let blockCalled: ActorArray<Bool> = ActorArray([])
+
+        var blockCalled: [Bool] = []
 
         let source = Source.network(URL(string: "url")!)
         let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(0))
 
-        let group = DispatchGroup()
-        
-        group.enter()
         let context1 = RetryContext(
             source: source,
             error: .responseError(reason: .URLSessionError(error: E()))
         )
         retry.retry(context: context1) { decision in
             guard case RetryDecision.retry(let userInfo) = decision else {
-                XCTFail("The decision should be `retry`")
+                XCTFail("The deicision should be `retry`")
                 return
             }
             XCTAssertNil(userInfo)
-            Task {
-                await blockCalled.append(true)
-                group.leave()
-            }
+            blockCalled.append(true)
         }
 
-        group.enter()
         let context2 = RetryContext(
             source: source,
             error: .responseError(reason: .URLSessionError(error: E()))
@@ -138,37 +131,24 @@ class RetryStrategyTests: XCTestCase {
         context2.increaseRetryCount() // 3
         retry.retry(context: context2) { decision in
             guard case RetryDecision.stop = decision else {
-                XCTFail("The decision should be `stop`")
+                XCTFail("The deicision should be `stop`")
                 return
             }
-            Task {
-                await blockCalled.append(true)
-                group.leave()
-            }
+            blockCalled.append(true)
         }
-        
-        group.notify(queue: .main) {
-            Task {
-                let result = await blockCalled.value
-                XCTAssertEqual(result.count, 2)
-                XCTAssertTrue(result.allSatisfy { $0 })
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 1, handler: nil)
+
+        XCTAssertEqual(blockCalled.count, 2)
+        XCTAssertTrue(blockCalled.allSatisfy { $0 })
     }
 
     func testDelayRetryStrategyNotRetryForErrorReason() {
-        let exp = expectation(description: #function)
         // Only non-user cancel error && response error should be retied.
-        let blockCalled: ActorArray<Bool> = ActorArray([])
+        var blockCalled: [Bool] = []
         let source = Source.network(URL(string: "url")!)
         let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(0))
 
         let task = URLSession.shared.dataTask(with: URL(string: "url")!)
 
-        let group = DispatchGroup()
-        group.enter()
         let context1 = RetryContext(
             source: source,
             error: .requestError(reason: .taskCancelled(task: .init(task: task), token: .init()))
@@ -178,13 +158,9 @@ class RetryStrategyTests: XCTestCase {
                 XCTFail("The decision should be `stop` if user cancelled the task.")
                 return
             }
-            Task {
-                await blockCalled.append(true)
-                group.leave()
-            }
+            blockCalled.append(true)
         }
 
-        group.enter()
         let context2 = RetryContext(
             source: source,
             error: .cacheError(reason: .imageNotExisting(key: "any_key"))
@@ -194,25 +170,15 @@ class RetryStrategyTests: XCTestCase {
                 XCTFail("The decision should be `stop` if the error type is not response error.")
                 return
             }
-            Task {
-                await blockCalled.append(true)
-                group.leave()
-            }
+            blockCalled.append(true)
         }
-        
-        group.notify(queue: .main) {
-            Task {
-                let result = await blockCalled.value
-                XCTAssertEqual(result.count, 2)
-                XCTAssertTrue(result.allSatisfy { $0 })
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 1, handler: nil)
+
+        XCTAssertEqual(blockCalled.count, 2)
+        XCTAssertTrue(blockCalled.allSatisfy { $0 })
     }
 
     func testDelayRetryStrategyDidRetried() {
-        let called = ActorBox(false)
+        var called = false
         let source = Source.network(URL(string: "url")!)
         let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(0))
         let context = RetryContext(
@@ -224,29 +190,18 @@ class RetryStrategyTests: XCTestCase {
                 XCTFail("The decision should be `retry`.")
                 return
             }
-            Task {
-                await called.setValue(true)
-            }
+            called = true
         }
 
-        Task {
-            let result = await called.value
-            XCTAssertTrue(result)
-        }
-        
+        XCTAssertTrue(called)
     }
 }
 
 private struct E: Error {}
 
-final class StubRetryStrategy: RetryStrategy, @unchecked Sendable {
+class StubRetryStrategy: RetryStrategy {
 
-    let queue = DispatchQueue(label: "com.onevcat.KingfisherTests.StubRetryStrategy")
-    var _count = 0
-    var count: Int {
-        get { queue.sync { _count } }
-        set { queue.sync { _count = newValue } }
-    }
+    var count = 0
 
     func retry(context: RetryContext, retryHandler: @escaping (RetryDecision) -> Void) {
 

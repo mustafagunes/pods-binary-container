@@ -30,7 +30,8 @@ import XCTest
 class ImageDataProviderTests: XCTestCase {
     
     func testLocalFileImageDataProvider() {
-        let document = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let fm = FileManager.default
+        let document = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let fileURL = document.appendingPathComponent("test")
         try! testImageData.write(to: fileURL)
         
@@ -43,13 +44,16 @@ class ImageDataProviderTests: XCTestCase {
         let exp = expectation(description: #function)
         provider.data { result in
             XCTAssertEqual(result.value, testImageData)
-            try! FileManager.default.removeItem(at: fileURL)
+            try! fm.removeItem(at: fileURL)
             exp.fulfill()
         }
 
         waitForExpectations(timeout: 1, handler: nil)
     }
     
+    #if swift(>=5.5)
+    #if canImport(_Concurrency)
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
     func testLocalFileImageDataProviderAsync() async {
         let fm = FileManager.default
         let document = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -66,7 +70,9 @@ class ImageDataProviderTests: XCTestCase {
         XCTAssertEqual(value, testImageData)
         try! fm.removeItem(at: fileURL)
     }
-
+    #endif
+    #endif
+    
     func testLocalFileImageDataProviderMainQueue() {
         let fm = FileManager.default
         let document = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -77,14 +83,14 @@ class ImageDataProviderTests: XCTestCase {
         XCTAssertEqual(provider.cacheKey, fileURL.localFileCacheKey)
         XCTAssertEqual(provider.fileURL, fileURL)
         
-        let called = LockIsolated(false)
+        var called = false
         provider.data { result in
             XCTAssertEqual(result.value, testImageData)
-            try! FileManager.default.removeItem(at: fileURL)
-            called.setValue(true)
+            try! fm.removeItem(at: fileURL)
+            called = true
         }
 
-        XCTAssertTrue(called.value)
+        XCTAssertTrue(called)
     }
     
     func testAVAssetImageDataProviderCacheKeyVariesForRemote() {
@@ -110,7 +116,9 @@ class ImageDataProviderTests: XCTestCase {
         XCTAssertEqual(provider1.cacheKey, provider2.cacheKey)
     }
     
-
+    #if swift(>=5.5)
+    #if canImport(_Concurrency)
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
     func testLocalFileImageDataProviderMainQueueAsync() async {
         let fm = FileManager.default
         let document = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -129,6 +137,8 @@ class ImageDataProviderTests: XCTestCase {
 
         XCTAssertTrue(called)
     }
+    #endif
+    #endif
     
     func testLocalFileCacheKey() {
         let url1 = URL(string: "file:///Users/onevcat/Library/Developer/CoreSimulator/Devices/ABC/data/Containers/Bundle/Application/DEF/Kingfisher-Demo.app/images/kingfisher-1.jpg")!
