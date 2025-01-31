@@ -10,8 +10,9 @@ Pod::Spec.new do |s|
     s.vendored_frameworks = "desk360-binary/XCFrameworks/Desk360.xcframework",
                             "desk360-binary/XCFrameworks/DeviceKit.xcframework",
                             "desk360-binary/XCFrameworks/Moya.xcframework",
-                            "desk360-binary/XCFrameworks/PersistenceKit.xcframework",
+                            "desk360-binary/XCFrameworks/PersistenceKit.xcframework"
     s.platform = :ios
+    s.requires_arc = true
     s.swift_version = '5.0'
     s.platform = :ios, '10.0'
 end
