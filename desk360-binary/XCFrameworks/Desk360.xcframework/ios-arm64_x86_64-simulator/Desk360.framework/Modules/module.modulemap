@@ -1,0 +1,4 @@
+framework module Desk360 {
+    header "Desk360-Swift.h"
+    export *
+}
