@@ -1,0 +1,4 @@
+framework module NVActivityIndicatorView {
+    header "NVActivityIndicatorView-Swift.h"
+    export *
+}

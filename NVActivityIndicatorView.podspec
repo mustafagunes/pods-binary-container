@@ -7,7 +7,8 @@ Pod::Spec.new do |s|
     s.license = { :type => "MIT", :file => "LICENSE" }
     s.author             = { "mustafagunes" => "gunes149@gmail.com" }
     s.source       = { :git => "https://github.com/mustafagunes/pods-binary-container", :tag => s.version }
-    s.vendored_frameworks = "nv-activity-indicator-view-binary/XCFrameworks/NVActivityIndicatorViewExtended.xcframework"
+    s.vendored_frameworks = "nv-activity-indicator-view-binary/XCFrameworks/NVActivityIndicatorView.xcframework",
+                            "nv-activity-indicator-view-binary/XCFrameworks/NVActivityIndicatorViewExtended.xcframework"
     s.platform = :ios
     s.swift_version = '5.0'
     s.platform = :ios, '9.0'
