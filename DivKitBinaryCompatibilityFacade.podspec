@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "DivKitBinaryCompatibilityFacade"
-    s.version      = "4.5.0"
+    s.version      = '4.5.3'
     s.summary      = "This library includes DivKitBinaryCompatibilityFacade binary libraries."
     s.description  = "This library includes DivKitBinaryCompatibilityFacade and the libraries it requires. Its purpose is to reduce long build times."
     s.homepage     = "https://github.com/divkit/divkit-ios-facade"
